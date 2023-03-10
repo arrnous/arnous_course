@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -23,114 +22,210 @@ class _HomeState extends State<Home> {
     items.remove(items[item]);
   }
 
+  bool color = false;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 3, 21, 37),
-        appBar: AppBar(
-          bottom: PreferredSize(
-              preferredSize: Size(size.width, size.height / 60),
-              child: const Padding(
-                padding: EdgeInsets.only(bottom: 15),
-                child: Text(
-                  "Flutter Mapp",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white),
-                ),
-              )),
-          toolbarHeight: 100,
-          backgroundColor: const Color.fromARGB(255, 83, 81, 81),
-
-          //centerTitle: true,
-          leading: Container(),
-          elevation: 0.0,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        bottom: PreferredSize(
+            preferredSize: Size(size.width, size.height / 60),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        additem(context);
-                        setState(() {});
-                        print(items.toString());
-                        // items.add(1);
-                      },
-                      icon: const Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 30,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Text(
+                          "Notepad",
+                          style: TextStyle(
+                              fontSize: 40,
+                              color: Colors.black.withOpacity(0.8)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      child: TextFormField(
+                        cursorColor: Colors.black,
+                        decoration: InputDecoration(
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: Colors.grey,
+                            ),
+                            hintTextDirection: TextDirection.ltr,
+                            filled: true,
+                            fillColor: Colors.white,
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: const BorderSide(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: const BorderSide(
+                                color: Colors.grey,
+                                width: 2.0,
+                              ),
+                            ),
+                            focusColor: Colors.grey,
+                            hoverColor: Colors.grey,
+                            // hintStyle: .alike(),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 10),
+                            hintText: "Search For Notes",
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.orange,
+                                  style: BorderStyle.solid),
+                              borderRadius: BorderRadius.circular(15),
+                            )),
                       ))
                 ],
               ),
-              AnimationLimiter(
-                key: ValueKey(items.length),
-                child: ListView.builder(
-                  reverse: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    if (items.isEmpty) {
-                      item == 0;
-                      items.clear();
-                    }
-                    return AnimationConfiguration.staggeredList(
-                      position: items.length,
-                      duration: const Duration(milliseconds: 500),
-                      child: SlideAnimation(
-                        verticalOffset: -50,
-                        key: ValueKey(items.length),
-                        curve: Curves.fastLinearToSlowEaseIn,
-                        child: Container(
-                          height: size.height / 14,
-                          width: size.width * 0.9,
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 20),
-                          decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 255, 204, 38),
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black.withOpacity(0.7),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 2))
-                              ]),
-                          child: ListTile(
-                            title: Text(
-                              "Item " + items[index].toString(),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.white),
+            )),
+        toolbarHeight: size.height / 3.3,
+        backgroundColor: Colors.white,
+        //centerTitle: true,
+        leading: Container(),
+        elevation: 0.0,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: size.height / 14,
+            ),
+            Container(
+              height: size.height / 13,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: const [
+                            Text(
+                              "Todays grocery list",
+                              style: TextStyle(fontSize: 17),
                             ),
-                            trailing: IconButton(
-                                onPressed: () {
-                                  deleteitem(context, index);
-                                  print(item.toString() + " removed");
-                                  print(items.toString());
-
-                                  // items = 0;
-                                },
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
-                                )),
-                          ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  },
-                  itemCount: items.length,
-                ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: const [
+                            Text(
+                              "Todays grocery list",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
-        ));
+            ),
+            SizedBox(
+              height: size.height / 30,
+            ),
+            Container(
+              height: size.height / 13,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                  color: Colors.amber.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: const [
+                            Text(
+                              "Todays grocery list",
+                              style: TextStyle(fontSize: 17),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: const [
+                            Text(
+                              "Todays grocery list",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 0,
+        backgroundColor: Colors.amber.withOpacity(0.7),
+        child: const Icon(Icons.add, color: Colors.black, size: 40),
+        onPressed: () {
+          additem(context);
+          setState(() {});
+          color == false ? color = true : color = false;
+        },
+      ),
+    );
   }
 }
